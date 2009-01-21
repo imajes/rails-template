@@ -12,8 +12,8 @@ run "rm public/robots.txt"
 run "rm -f public/javascripts/*"
 
 # Download JQuery
-run "curl -L http://jqueryjs.googlecode.com/files/jquery-1.2.6.min.js > public/javascripts/jquery.js"
-run "curl -L http://jqueryjs.googlecode.com/svn/trunk/plugins/form/jquery.form.js > public/javascripts/jquery.form.js"
+run "curl -s -L http://jqueryjs.googlecode.com/files/jquery-1.2.6.min.js > public/javascripts/jquery.js"
+run "curl -s -L http://jqueryjs.googlecode.com/svn/trunk/plugins/form/jquery.form.js > public/javascripts/jquery.form.js"
 
 # Set up git repository
 git :init
@@ -52,9 +52,9 @@ inside ('spec') {
   run "mkdir blueprints" 
   run "rm -rf fixtures"
   run "rm spec_helper.rb spec.opts rcov.opts"
-  run "wget http://github.com/imajes/rails-template/raw/master/spec_helper.rb"
-  run "wget http://github.com/imajes/rails-template/raw/master/rcov.opts"
-  run "wget http://github.com/imajes/rails-template/raw/master/spec.opts"
+  run "curl -sL http://github.com/imajes/rails-template/raw/master/spec_helper.rb > spec_helper.rb"
+  run "curl -sL http://github.com/imajes/rails-template/raw/master/rcov.opts > rcov.opts"
+  run "curl -sL http://github.com/imajes/rails-template/raw/master/spec.opts > spec.opts"
   
 }
 
