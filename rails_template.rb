@@ -51,8 +51,11 @@ gem 'faker'
 inside ('spec') { 
   run "mkdir blueprints" 
   run "rm -rf fixtures"
-  run "rm spec_helper.rb"
+  run "rm spec_helper.rb spec.opts rcov.opts"
   run "wget http://github.com/imajes/rails-template/raw/master/spec_helper.rb"
+  run "wget http://github.com/imajes/rails-template/raw/master/rcov.opts"
+  run "wget http://github.com/imajes/rails-template/raw/master/spec.opts"
+  
 }
 
 ## Potentially Useful 
