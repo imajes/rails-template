@@ -1,0 +1,7 @@
+This is based on the new rails template stuff by MR Neighborly
+
+a really nice hack is to then do this: 
+
+alias rails="ruby ~/src/git/rails/railties/bin/rails $1 -m http://github.com/imajes/rails-template/raw/master/rails_template.rb"
+
+this works for me, for zsh.. similar i am sure will work for you
