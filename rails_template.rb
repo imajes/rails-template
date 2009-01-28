@@ -77,7 +77,7 @@ end
 
 # tags
 if yes?("Do you want tags with that?")
-  plugin 'acts_as_taggable_redux', :git => 'git://github.com/monki/acts_as_taggable_redux.git', :submodule => true
+  plugin 'acts_as_taggable_redux', :git => 'git://github.com/geemus/acts_as_taggable_redux.git', :submodule => true
   rake('acts_as_taggable:db:create')
 end
 
