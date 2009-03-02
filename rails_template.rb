@@ -4,6 +4,7 @@
 # Link to local copy of edge rails
 inside('vendor') { run 'ln -s ~/src/git/rails rails' }
 
+
 # Delete unnecessary files
 run "rm README"
 run "rm public/index.html"
@@ -32,6 +33,7 @@ log/*.log
 tmp/**/*
 config/database.yml
 db/*.sqlite3
+vendor/rails
 END
 
 # Set up session store initializer
@@ -40,13 +42,14 @@ ActionController::Base.session = { :session_key => '_#{(1..6).map { |x| (65 + ra
 ActionController::Base.session_store = :active_record_store
   END
 
-# Install submoduled plugins
+# Install plugins
 ## Those that relate to testing
 plugin 'cucumber', :git => 'git://github.com/aslakhellesoy/cucumber.git'
 plugin 'rspec', :git => 'git://github.com/dchelimsky/rspec.git'
 plugin 'rspec-rails', :git => 'git://github.com/dchelimsky/rspec-rails.git'
 plugin 'machinist', :git => 'git://github.com/notahat/machinist.git'
 generate("rspec")
+generate("cucumber")
 gem 'faker'
 
 ## setup for the win
