@@ -3,7 +3,7 @@
 
 # Link to local copy of edge rails
 inside('vendor') { run 'ln -s ~/src/git/rails rails' }
-
+inside('vendor/rails') { run 'git pull' }
 
 # Delete unnecessary files
 run "rm README"
@@ -44,17 +44,25 @@ ActionController::Base.session_store = :active_record_store
 
 # Install plugins
 ## Those that relate to testing
-plugin 'cucumber', :git => 'git://github.com/aslakhellesoy/cucumber.git'
-plugin 'rspec', :git => 'git://github.com/dchelimsky/rspec.git'
-plugin 'rspec-rails', :git => 'git://github.com/dchelimsky/rspec-rails.git'
-plugin 'machinist', :git => 'git://github.com/notahat/machinist.git'
+# RSpec is the original Behaviour Driven Development framework for Ruby.
+plugin 'rspec', :git => "git://github.com/dchelimsky/rspec.git"
+
+# RSpec's official Ruby on Rails plugin  
+plugin 'rspec-rails', :git => "git://github.com/dchelimsky/rspec-rails.git"
+
+# Fixture replacement for focused and readable tests.
+plugin 'object_daddy', :git => "git://github.com/flogic/object_daddy.git"
+
+# BDD that talks to domain experts first and code 2nd
+plugin 'cucumber', :git => "git://github.com/aslakhellesoy/cucumber.git"
+
 generate("rspec")
 generate("cucumber")
 gem 'faker'
 
 ## setup for the win
 inside ('spec') { 
-  run "mkdir blueprints" 
+  run "mkdir exemplars"
   run "rm -rf fixtures"
   run "rm spec_helper.rb spec.opts rcov.opts"
   run "curl -sL http://github.com/imajes/rails-template/raw/master/spec_helper.rb > spec_helper.rb"
@@ -65,17 +73,20 @@ inside ('spec') {
 
 ## Potentially Useful 
 plugin 'asset_packager', :git => 'git://github.com/sbecker/asset_packager.git'
-plugin 'exception_notifier', :git => 'git://github.com/rails/exception_notification.git'
+plugin 'hoptoad_notifier', :git => 'git://github.com/thoughtbot/hoptoad_notifier.git'
 
 ## user related
 if yes?("Will this app have authenticated users?")
-  plugin 'open_id_authentication', :git => 'git://github.com/rails/open_id_authentication.git'
   plugin 'role_requirement', :git => 'git://github.com/timcharper/role_requirement.git'
   plugin 'restful-authentication', :git => 'git://github.com/technoweenie/restful-authentication.git'
   plugin 'aasm', :git => 'git://github.com/rubyist/aasm.git'
   gem 'ruby-openid', :lib => 'openid'  
   generate("authenticated", "user session")
   generate("roles", "Role User")
+end
+
+if yes?("OpenID Support?")
+  plugin 'open_id_authentication', :git => 'git://github.com/rails/open_id_authentication.git'
   rake('open_id_authentication:db:create')
 end
 
@@ -101,7 +112,10 @@ generate(:model, first)
 
 # Commit all work so far to the repository
 git :add => '.'
-git :commit => "-a -m 'Initial commit'"
+git :commit => "-a -m 'First POST!'"
 
 # Success!
-puts "SUCCESS!"
+puts "SUCCESS! - remember to setup hoptoad with the following:"
+puts "HoptoadNotifier.configure do |config|
+  config.api_key = '1234567890abcdef'
+end"
